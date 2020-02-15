@@ -8,13 +8,14 @@
     register: openstack_info
     tags:
       - osp.smoke
-  - debug:
-    msg: "{{ openstack_info }}"
   - name: Curl website
     uri:
       url: openstack_info.
   - name: Fail if 'Ansible has done its job' is not in the page content
     fail:
+      msg: "Smoke test failed"
     when: "'Ansible has done its job' not in webpage.results[0].content"
     tags:
       - osp.smoke
+  - debug:
+      msg: "{{ openstack_info }}"
